@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helensburgh &amp; District Model Railway Club</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy: #1a2744;
+    --steel: #2d4a6e;
+    --teal: #38797a;
+    --gold: #c9a84c;
+    --gold-light: #e8cc7b;
+    --cream: #f5f1e8;
+    --warm-white: #fafaf7;
+    --charcoal: #1e1e1e;
+    --gray: #6b7280;
+    --light-line: rgba(26,39,68,0.1);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.04);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,.1), 0 4px 8px rgba(0,0,0,.05);
+    --radius: 12px;
+    --radius-lg: 20px;
+    --transition: .3s cubic-bezier(.4,0,.2,1);
+  }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--charcoal);
+    background: var(--warm-white);
+    line-height: 1.7;
+    overscroll-behavior: none;
+  }
+
+  /* ── Typography ── */
+  h1,h2,h3,h4 { line-height: 1.2; font-weight: 700; color: var(--navy); }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); letter-spacing: -.02em; }
+  h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); letter-spacing: -.01em; }
+  h3 { font-size: clamp(1.15rem, 2vw, 1.4rem); }
+  p  { color: var(--gray); }
+  a  { color: var(--teal); text-decoration: none; transition: color var(--transition); }
+  a:hover { color: var(--gold); }
+
+  /* ── Layout ── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 80px 0; }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250,250,247,.88);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border-bottom: 1px solid var(--light-line);
+    transition: box-shadow var(--transition);
+  }
+  nav.scrolled { box-shadow: var(--shadow-md); }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 12px;
+    font-weight: 700; color: var(--navy); font-size: .95rem;
+  }
+  .nav-brand svg { flex-shrink: 0; }
+  .nav-links { display: flex; gap: 8px; align-items: center; list-style: none; }
+  .nav-links a {
+    padding: 6px 14px; border-radius: 8px; font-size: .875rem; font-weight: 500;
+    color: var(--steel); transition: background var(--transition), color var(--transition);
+  }
+  .nav-links a:hover { background: var(--navy); color: #fff; }
+  .menu-toggle {
+    display: none; background: none; border: none; cursor: pointer; padding: 8px;
+  }
+  @media (max-width: 768px) {
+    .nav-links {
+      position: fixed; top: 64px; left: 0; right: 0; bottom: 0;
+      flex-direction: column; background: var(--warm-white); padding: 32px 24px;
+      gap: 4px; transform: translateX(100%); transition: transform var(--transition);
+    }
+    .nav-links.open { transform: translateX(0); }
+    .nav-links a { font-size: 1.1rem; padding: 12px 16px; width: 100%; }
+    .menu-toggle { display: block; }
+  }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    text-align: center; position: relative; overflow: hidden;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(56,121,122,.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 80%, rgba(201,168,76,.06) 0%, transparent 50%),
+      var(--warm-white);
+    padding: 100px 24px 80px;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 58 Q15 43 30 58 Q45 73 60 58' stroke='%231a274408' fill='none' stroke-width='.7'/%3E%3C/svg%3E");
+    background-size: 60px 60px; opacity: .5; pointer-events: none;
+  }
+  .hero-content { position: relative; max-width: 720px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 18px; border-radius: 100px;
+    background: rgba(56,121,122,.08); color: var(--teal);
+    font-size: .8rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero-badge svg { flex-shrink: 0; }
+  .hero h1 { margin-bottom: 20px; }
+  .hero p { font-size: clamp(1rem, 2vw, 1.15rem); max-width: 560px; margin: 0 auto 36px; }
+  .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* ── Buttons ── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 28px; border-radius: 10px; font-size: .95rem; font-weight: 600;
+    border: none; cursor: pointer; transition: all var(--transition);
+  }
+  .btn-primary { background: var(--navy); color: #fff; box-shadow: var(--shadow-sm); }
+  .btn-primary:hover { background: var(--steel); color: #fff; transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .btn-outline { background: transparent; color: var(--navy); border: 1.5px solid var(--light-line); }
+  .btn-outline:hover { border-color: var(--navy); color: var(--navy); transform: translateY(-2px); }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .btn-gold:hover { background: var(--gold-light); color: var(--navy); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+  /* ── Stats strip ── */
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px; background: var(--light-line); border-radius: var(--radius-lg); overflow: hidden;
+    max-width: 900px; margin: -40px auto 0; position: relative; z-index: 2;
+    box-shadow: var(--shadow-lg);
+  }
+  .stat {
+    background: #fff; padding: 32px 24px; text-align: center;
+  }
+  .stat-number { font-size: 2.2rem; font-weight: 800; color: var(--navy); line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: .82rem; color: var(--gray); text-transform: uppercase; letter-spacing: .06em; font-weight: 500; }
+
+  /* ── Section header ── */
+  .section-header { text-align: center; max-width: 640px; margin: 0 auto 48px; }
+  .section-header p { margin-top: 12px; font-size: 1.05rem; }
+
+  /* ── About ── */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .about-text p { margin-bottom: 16px; }
+  .about-image {
+    border-radius: var(--radius-lg); overflow: hidden;
+    aspect-ratio: 4/3; background: linear-gradient(135deg, var(--navy), var(--teal));
+    display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.6);
+    font-size: .9rem; position: relative;
+  }
+  .about-image svg { width: 48px; height: 48px; opacity: .3; }
+  .year-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 100px; background: rgba(201,168,76,.12); color: var(--gold);
+    font-size: .78rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+
+  /* ── Layouts ── */
+  #layouts { background: var(--cream); }
+  .layout-filters { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+  .filter-btn {
+    padding: 8px 18px; border-radius: 100px; border: 1.5px solid var(--light-line);
+    background: #fff; font-size: .82rem; font-weight: 600; color: var(--steel); cursor: pointer;
+    transition: all var(--transition); outline: none;
+  }
+  .filter-btn:hover { border-color: var(--teal); color: var(--teal); background: rgba(56,121,122,.04); }
+  .filter-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .layout-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .layout-card {
+    background: #fff; border-radius: var(--radius); overflow: hidden;
+    transition: transform var(--transition), box-shadow var(--transition), opacity .4s ease;
+    box-shadow: var(--shadow-sm); border: 1px solid var(--light-line); cursor: pointer;
+  }
+  .layout-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .layout-card.hidden { display: none; }
+  .layout-card-color {
+    aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .layout-card-body { padding: 20px; }
+  .layout-tag {
+    display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: .72rem;
+    font-weight: 600; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .layout-card-body h3 { margin-bottom: 6px; }
+  .layout-card-body p { font-size: .9rem; line-height: 1.5; }
+  
+  /* Detail overlay */
+  .overlay {
+    position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center;
+    background: rgba(26,39,68,.5); backdrop-filter: blur(8px);
+    opacity: 0; pointer-events: none; transition: opacity .3s ease;
+  }
+  .overlay.active { opacity: 1; pointer-events: auto; }
+  .overlay-panel {
+    background: #fff; border-radius: var(--radius-lg); max-width: 560px; width: 90%; overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,.25); transform: translateY(30px) scale(.95); transition: transform .3s ease;
+    max-height: 85vh; overflow-y: auto;
+  }
+  .overlay.active .overlay-panel { transform: translateY(0) scale(1); }
+  .overlay-banner { 
+    height: min(280px, 50vh); display: flex; align-items: center; justify-content: center; position: relative;
+  }
+  .overlay-close {
+    position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,.85); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background var(--transition); color: var(--navy);
+  }
+  .overlay-close:hover { background: #fff; }
+  .overlay-body { padding: 32px; }
+  .overlay-body h2 { margin-bottom: 8px; font-size: 1.6rem; }
+  .overlay-body p { font-size: .95rem; line-height: 1.7; margin-bottom: 10px; }
+  .overlay-meta { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--light-line); }
+  .overlay-meta-item { font-size: .82rem; display: flex; align-items: center; gap: 6px; color: var(--steel); }
+  .overlay-meta-item svg { opacity: .5; }
+
+  /* ── Timeline ── */
+  .timeline { position: relative; max-width: 720px; margin: 0 auto; padding-left: 40px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(to bottom, var(--gold), var(--teal), var(--navy)); border-radius: 2px;
+  }
+  .timeline-item { position: relative; margin-bottom: 40px; }
+  .timeline-item:last-child { margin-bottom: 0; }
+  .timeline-dot {
+    position: absolute; left: -33px; top: 4px; width: 18px; height: 18px; border-radius: 50%;
+    background: #fff; border: 3px solid var(--navy); box-shadow: var(--shadow-sm);
+  }
+  .timeline-year { font-size: .78rem; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+  .timeline-item h3 { margin-bottom: 4px; }
+  .timeline-item p { font-size: .92rem; }
+
+  /* ── Events ── */
+  #events { background: var(--cream); }
+  .event-card {
+    max-width: 720px; margin: 0 auto;
+    background: #fff; border-radius: var(--radius-lg); overflow: hidden;
+    box-shadow: var(--shadow-md); border: 1px solid var(--light-line);
+  }
+  .event-banner {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--steel) 50%, var(--teal) 100%);
+    padding: 40px; color: #fff; text-align: center;
+  }
+  .event-banner h3 { color: var(--gold-light); font-size: clamp(1.3rem, 2.5vw, 1.6rem); margin-bottom: 8px; }
+  .event-banner p { color: rgba(255,255,255,.7); }
+  .event-details { padding: 32px 40px; display: grid; grid-template-columns: auto 1fr; gap: 16px 24px; }
+  .event-detail { display: flex; align-items: center; gap: 12px; }
+  .event-detail-icon {
+    width: 40px; height: 40px; border-radius: 10px; background: rgba(56,121,122,.08);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--teal);
+  }
+  .event-detail strong { font-size: .85rem; color: var(--navy); display: block; }
+  .event-detail span { font-size: .9rem; color: var(--gray); }
+  @media (max-width: 480px) { .event-details { padding: 24px; grid-template-columns: 1fr; gap: 12px; } }
+
+  /* ── Membership ── */
+  .membership-card {
+    max-width: 640px; margin: 0 auto; text-align: center;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--steel) 100%);
+    border-radius: var(--radius-lg); padding: 56px 48px; color: #fff; position: relative; overflow: hidden;
+  }
+  .membership-card::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1' fill='rgba(255,255,255,.06)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .membership-card > * { position: relative; z-index: 1; }
+  .membership-card h2 { color: var(--gold-light); margin-bottom: 12px; }
+  .membership-card p { color: rgba(255,255,255,.75); margin-bottom: 8px; }
+  .membership-card .btn { margin-top: 24px; }
+
+  /* ── Contact/Footer ── */
+  footer { background: var(--navy); color: rgba(255,255,255,.6); padding: 60px 0 32px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand h3 { color: #fff; font-size: 1.1rem; margin-bottom: 8px; }
+  .footer-brand p { font-size: .88rem; max-width: 320px; }
+  footer h4 { color: rgba(255,255,255,.4); font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px; }
+  footer ul { list-style: none; }
+  footer li { margin-bottom: 8px; }
+  footer a { color: rgba(255,255,255,.7); font-size: .88rem; }
+  footer a:hover { color: var(--gold); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,.08); padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-bottom p { font-size: .8rem; }
+  .social-links { display: flex; gap: 16px; }
+  .social-links a { color: rgba(255,255,255,.5); transition: color var(--transition); }
+  .social-links a:hover { color: var(--gold); }
+  @media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+
+  /* ── News highlight box ── */
+  .news-box {
+    max-width: 720px; margin: -20px auto 60px; background: #fff; border-radius: var(--radius-lg);
+    padding: 32px; display: flex; gap: 24px; align-items: flex-start; box-shadow: var(--shadow-md);
+    border-left: 4px solid var(--gold);
+  }
+  .news-box-icon {
+    width: 56px; height: 56px; border-radius: 14px; background: rgba(201,168,76,.1);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--gold);
+  }
+  .news-box h3 { font-size: 1.05rem; margin-bottom: 4px; }
+  .news-box p { font-size: .9rem; margin-bottom: 4px; }
+  .news-date { font-size: .78rem; color: var(--gray); opacity: .7; }
+  @media (max-width: 480px) { .news-box { flex-direction: column; gap: 16px; } }
+
+  /* ── Scroll animations ── */
+  .fade-up {
+    opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── Gauge color palette ── */
+  .gauge-n { background: linear-gradient(135deg, #4a7c8b, #6aabba); color: rgba(255,255,255,.85); }
+  .gauge-oo9 { background: linear-gradient(135deg, #8b6f47, #b0946a); color: rgba(255,255,255,.85); }
+  .gauge-oo { background: linear-gradient(135deg, #5a6fa5, #7b92c0); color: rgba(255,255,255,.85); }
+  .gauge-3rail { background: linear-gradient(135deg, #a5674a, #c08a6e); color: rgba(255,255,255,.85); }
+  .gauge-o { background: linear-gradient(135deg, #4a8b6f, #6eb094); color: rgba(255,255,255,.85); }
+
+  .tag-n { background: rgba(74,124,139,.1); color: #4a7c8b; }
+  .tag-oo9 { background: rgba(139,111,71,.1); color: #8b6f47; }
+  .tag-oo { background: rgba(90,111,165,.1); color: #5a6fa5; }
+  .tag-3rail { background: rgba(165,103,74,.1); color: #a5674a; }
+  .tag-o { background: rgba(74,139,111,.1); color: #4a8b6f; }
+
+  /* ── Retro train icon in cards ── */
+  .train-icon { width: 52px; height: 52px; opacity: .25; }
+
+  /* ── Card photos ── */
+  .layout-card-color img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .about-image img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+
+  /* ── Carousel ── */
+  .carousel {
+    position: relative; overflow: hidden; touch-action: pan-y; user-select: none; -webkit-user-select: none;
+  }
+  .carousel-track {
+    display: flex; transition: transform .35s cubic-bezier(.4,0,.2,1); will-change: transform;
+    height: 100%;
+  }
+  .carousel-track.dragging { transition: none; }
+  .carousel-slide {
+    min-width: 100%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .carousel-slide img {
+    width: 100%; height: 100%; object-fit: contain; display: block;
+  }
+  .carousel-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.85);
+    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background var(--transition); color: var(--navy);
+    box-shadow: 0 2px 8px rgba(0,0,0,.15); z-index: 2; opacity: 0; pointer-events: none;
+  }
+  .carousel:hover .carousel-nav { opacity: 1; pointer-events: auto; }
+  .carousel-nav:hover { background: #fff; }
+  .carousel-prev { left: 8px; }
+  .carousel-next { right: 8px; }
+  .carousel-dots {
+    position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 6px; z-index: 2;
+  }
+  .carousel-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.45);
+    border: none; cursor: pointer; padding: 0; transition: background var(--transition), transform .2s ease;
+  }
+  .carousel-dot.active { background: #fff; transform: scale(1.3); }
+</style>
+</head>
+<body>
+
+<!-- ════════ NAV ════════ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#home" class="nav-brand">
+      <img src="img/logo.jpg" alt="HDMRC Logo" width="36" height="36" style="object-fit:contain; border-radius: 6px;" />
+      HDMRC
+    </a>
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#layouts">Our Layouts</a></li>
+      <li><a href="#history">History</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#membership">Membership</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ════════ HERO ════════ -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Est. Autumn 1989
+    </div>
+    <h1>Helensburgh &amp;<br>District Model Railway<br>Club</h1>
+    <p>Catering for modellers of all ages, scales and interests from Helensburgh and the surrounding area. We welcome all experience levels&mdash;from the seasoned modeller to those just getting started.</p>
+    <div class="hero-actions">
+      <a href="#layouts" class="btn btn-primary">Explore Our Layouts</a>
+      <a href="#membership" class="btn btn-outline">Become a Member</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ STATS ════════ -->
+<div class="stats container fade-up">
+  <div class="stat"><div class="stat-number">35+</div><div class="stat-label">Years of History</div></div>
+  <div class="stat"><div class="stat-number">9</div><div class="stat-label">Active Layouts</div></div>
+  <div class="stat"><div class="stat-number">5</div><div class="stat-label">Scales &amp; Gauges</div></div>
+  <div class="stat"><div class="stat-number">4</div><div class="stat-label">Annual Exhibitions</div></div>
+</div>
+
+<!-- ════════ NEWS ════════ -->
+<div class="container" style="padding-top:56px;">
+  <div class="news-box fade-up">
+    <div class="news-box-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14 2 9.27l6.91-.99z"/></svg>
+    </div>
+    <div>
+      <h3>Micro Layout Impresses &mdash; Best in Show</h3>
+      <p>Congratulations to club member <strong>Luca</strong>, whose debut layout <em>Dumbarton TMD</em> received the<br><strong>&lsquo;Best in Show&rsquo;</strong> award at the Paisley Model Railway Show as voted for by fellow exhibitors. A well-deserved result for one of our youngest members!</p>
+      <span class="news-date">8 December 2025</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ ABOUT ════════ -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text fade-up">
+        <div class="year-badge">Our Story</div>
+        <h2>A Rich Railway<br>Tradition Since 1989</h2>
+        <p>The club was founded in autumn&nbsp;1989 by World War&nbsp;Two Arctic convoy veterans <strong>Gilbert Hutchison</strong> and <strong>Archie Allan</strong>, who placed a newspaper advert. The first meeting at the Clyde Community Centre drew locals, Navy/MOD staff from Faslane, and electrical engineer <strong>Dave Forrest</strong>.</p>
+        <p>The club was formalised with <strong>Geoff Dalton</strong> (Chairman) and <strong>Mike Lovell</strong> (Secretary). Our logo is based on the <strong>North British Locomotive Company</strong>&rsquo;s iconic roundel&mdash;nodding to Glasgow's proud engineering heritage.</p>
+        <p>We maintain a relaxed, skill-sharing atmosphere leveraging our members' diverse talents. Regular exhibitions at <strong>Modelrail Scotland</strong>, <strong>Paisley/Braehead</strong>, <strong>Summerlee Museum</strong>, <strong>Cathcart</strong>, and <strong>North Ayrshire</strong>.&nbsp;<em style="font-size:.8rem;color:var(--gray)">Page updated August&nbsp;2026.</em></p>
+      </div>
+      <div class="about-image fade-up">
+        <img src="img/about/craigendoran-station.jpg" alt="Craigendoran Pier layout photograph"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ LAYOUTS ════════ -->
+<section id="layouts">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>Our Layouts</h2>
+      <p>Modelling spans diverse themes&mdash;from sleepy Scottish villages and bustling commuter stations to the Western Front and American mountain ranges.</p>
+    </div>
+
+    <!-- Filter buttons -->
+    <div class="layout-filters fade-up">
+      <button class="filter-btn active" data-gauge="all">All Layouts</button>
+      <button class="filter-btn" data-gauge="n-n"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/></svg> N</button>
+      <button class="filter-btn" data-gauge="oo9-oo"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 20l8-16h8"/></svg> OO</button>
+      <button class="filter-btn" data-gauge="3rail"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4v16m4-16v16m4-16v16"/></svg> 3-Rail</button>
+      <button class="filter-btn" data-gauge="o"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="6" y="6" width="12" height="12"/></svg> O</button>
+    </div>
+
+    <div class="layout-grid">
+
+      <div class="layout-card fade-up" data-gauges="n-n,gauge-n" onclick="openDetail(this)">
+        <div class="layout-card-color gauge-n">
+          <img src="img/layouts/millig-bay/01.jpg" alt="Millig Bay layout" width="640" height="360"/>
+        </div>
+        <div class="layout-card-body">
+          <span class="layout-tag tag-n">N Gauge</span>
+          <h3>Millig Bay</h3>
+          <p>A N gauge layout featured at our upcoming show.</p>
+        </div>
+      </div>
+
+      <div class="layout-card fade-up" data-gauges="n-n,gauge-n" onclick="openDetail(this)">
+        <div class="layout-card-color gauge-n">
+          <img src="img/layouts/millig-creek/01.jpg" alt="Millig Creek layout" width="640" height="360"/>
+        </div>
+        <div class="layout-card-body">
+          <span class="layout-tag tag-n">N Gauge</span>
+          <h3>Millig Creek</h3>
+          <p>N gauge scenery exploring natural landscapes and railways.</p>
+        </div>
+      </div>
+
+      <div class="layout-card fade-up" data-gauges="oo9-oo,gauge-oo9" onclick="openDetail(this)">
+        <div class="layout-card-color gauge-oo9">
+          <img src="img/layouts/trenches/01.jpg" alt="Trenches layout" width="640" height="360"/>
+        </div>
+        <div class="layout-card-body">
+          <span class="layout-tag tag-oo9">OO9 Narrow Gauge</span>
+          <h3>Trenches</h3>
+          <p>WWI supply lines layout&mdash;awarded the Tolworth Trainshow Cup, November&nbsp;2018.</p>
+        </div>
+      </div>
+
+      <div class="layout-card fade-up" data-gauges="oo9-oo,gauge-oo" onclick="openDetail(this)">
+        <div class="layout-card-color gauge-oo">
+          <img src="img/layouts/deadend-sidings/01.jpg" alt="Deadend Sidings layout" width="640" height="360"/>
+        </div>
+        <div class="layout-card-body">
+          <span class="layout-tag tag-oo">OO Gauge</span>
+          <h3>Deadend Sidings</h3>
+          <p>A classic OO gauge shunting puzzle with end-of-line drama.</p>
+        </div>
+      </div>
+
+      <div class="layout-card fade-up" data-gauges="oo9-oo,gauge-oo" onclick="openDetail(this)">
+        <div class="layout-card-color gauge-oo">
+          <img src="img/layouts/millig-yard/plan.jpg" alt="Millig Yard layout plan" width="640" height="360"/>
+        </div>
+        <div class="layout-card-body">
+          <span class="layout-tag tag-oo">OO Gauge</span>
+          <h3>Millig Yard</h3>
+          <p>Bustling locomotive yard in OO gauge&mdash;run your trains!</p>
+        </div>
+      </div>
+
+      <div class="layout-card fade-up" data-gauges="3rail,gauge-3rail" onclick="openDetail(this)">
+        <div class="layout-card-color gauge-3rail">
+          <img src="img/layouts/asitwas/01.jpg" alt="Asitwas layout" width="640" height="360"/>
+        </div>
+        <div class="layout-card-body">
+          <span class="layout-tag tag-3rail">OO 3-Rail</span>
+          <h3>Asitwas</h3>
+          <p>A nostalgic OO 3-rail layout capturing a bygone era.</p>
+        </div>
+      </div>
+
+      <div class="layout-card fade-up" data-gauges="oo9-oo,gauge-oo" onclick="openDetail(this)">
+        <div class="layout-card-color gauge-oo">
+          <img src="img/layouts/clydemuir/01.jpg" alt="Clydemuir layout" width="640" height="360"/>
+        </div>
+        <div class="layout-card-body">
+          <span class="layout-tag tag-oo">OO Gauge</span>
+          <h3>Clydemuir</h3>
+          <p>North Clyde electric lines based on Dalmuir&mdash;debuted Modelrail Scotland&nbsp;2026.</p>
+        </div>
+      </div>
+
+      <div class="layout-card fade-up" data-gauges="o,gauge-o" onclick="openDetail(this)">
+        <div class="layout-card-color gauge-o">
+          <img src="img/layouts/lockdown-lane/01.jpg" alt="Lockdown Lane layout" width="640" height="360"/>
+        </div>
+        <div class="layout-card-body">
+          <span class="layout-tag tag-o">O Gauge</span>
+          <h3>Lockdown Lane</h3>
+          <p>A larger scale layout with distinctive prototypical operation.</p>
+        </div>
+      </div>
+
+      <div class="layout-card fade-up" data-gauges="o,gauge-o" onclick="openDetail(this)">
+        <div class="layout-card-color gauge-o">
+          <img src="img/layouts/canal-sidings/01.jpg" alt="Canal Sidings layout" width="640" height="360"/>
+        </div>
+        <div class="layout-card-body">
+          <span class="layout-tag tag-o">O Gauge</span>
+          <h3>Canal Sidings</h3>
+          <p>O gauge industrial sidings inspired by Scotland's canal heritage.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════ HISTORY TIMELINE ════════ -->
+<section id="history">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>Timeline</h2>
+      <p>Over three and a half decades of models, exhibitions, and community.</p>
+    </div>
+    <div class="timeline fade-up">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1989</div>
+        <h3>Club Founded</h3>
+        <p>WW2 Arctic convoy veterans Gilbert Hutchison and Archie Allan place a newspaper advert, founding the club. The first meeting is held at the Clyde Community Centre.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1991</div>
+        <h3>First Exhibition &ldquo;Trierro&rdquo;</h3>
+        <p>OO continuous/branch line debuts. Followed by the ambitious two-level OO loop &ldquo;Seaforth.&rdquo;</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1995</div>
+        <h3>Craigendoran Pier Debut</h3>
+        <p>A magnificent 30&times;15&nbsp;ft 1950s-themed layout with a painted Jeanie Deans paddle steamer and scenery by artist Neil MacLeod. Wins scenery &amp; general cups at Modelrail. Retired to the skip in 2026.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2000s&ndash;2010s</div>
+        <h3>Expanding the Fleet</h3>
+        <p>King Street Gardens, Shieldinch (N), Levenford (N, American trains&nbsp;&mdash; 2014), and Clyde Street (1950s North Clyde suburban OO&nbsp;&mdash; 2016) join the club.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">Nov 2018</div>
+        <h3>Trenches Wins Tolworth Cup</h3>
+        <p>The WWI supply lines layout wins the Tolworth Trainshow Cup, cementing the club's reputation for quality scenery and operation.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">Feb 2027</div>
+        <h3>Up Next&mdash;Model Rail Scotland</h3>
+        <p>The club exhibits <strong>Millig Bay</strong> (N gauge) at the SECC, 26&ndash;28&nbsp;February 2027. More to follow.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ EVENTS ════════ -->
+<section id="events">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>Upcoming Event</h2>
+      <p>See us in person&mdash;run the layouts and chat with members.</p>
+    </div>
+    <div class="event-card fade-up">
+      <div class="event-banner">
+        <h3>Model Rail Scotland 2027</h3>
+        <p>Our latest layout &ldquo;Millig Bay&rdquo; (N gauge) will be on show.</p>
+      </div>
+      <div class="event-details">
+        <div class="event-detail">
+          <div class="event-detail-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div><strong>Dates</strong><span>26&ndash;28 February 2027</span></div>
+        </div>
+        <div class="event-detail">
+          <div class="event-detail-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div><strong>Venue</strong><span>SECC &mdash; Scottish Exhibition &amp; Conference Centre</span></div>
+        </div>
+        <div class="event-detail">
+          <div class="event-detail-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9.53 16.12A13 13 0 0012 22a13 13 0 0012-5.88"/><path d="M2 12a10 10 0 0117.47-5.35"/></svg>
+          </div>
+          <div><strong>Layout</strong><span>Millig Bay &mdash; N Gauge</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Other regular shows -->
+    <div style="text-align:center;margin-top:40px;" class="fade-up">
+      <p style="font-size:.92rem;">We also exhibit at Paisley/Braehead, Summerlee Museum, Cathcart &amp; North Ayrshire throughout the year.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ MEMBERSHIP ════════ -->
+<section id="membership">
+  <div class="container">
+    <div class="membership-card fade-up">
+      <h2>Join the Club</h2>
+      <p style="font-size:1.05rem;color:rgba(255,255,255,.9);margin-bottom:4px;">Meetings most weeks&mdash;Mondays &amp; Wednesdays</p>
+      <p>All experience levels are welcome. Why not come along as a visitor before you decide to join?</p>
+      <p>Contact <a href="mailto:membership@helensburghdmrc.org" style="color:var(--gold-light);text-decoration:underline;">membership&#64;helensburghdmrc.org</a> to arrange a preliminary visit.</p>
+      <a href="mailto:membership@helensburghdmrc.org" class="btn btn-gold">Email to Arrange a Visit &#8594;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FOOTER / CONTACT ════════ -->
+<footer id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>Helensburgh &amp; District Model Railway Club</h3>
+        <p>Catering for modellers of all ages, scales and interests from Helensburgh and the surrounding area since 1989.</p>
+      </div>
+      <div>
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#layouts">Our Layouts</a></li>
+          <li><a href="#history">History</a></li>
+          <li><a href="#events">Events</a></li>
+          <li><a href="#membership">Membership</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:membership@helensburghdmrc.org">membership&#64;helensburghdmrc.org</a></li>
+          <li><a href="https://www.facebook.com/Helensburghdmrc/?locale=en_GB" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="https://www.youtube.com/@helensburghdistrictmodelra4736" target="_blank" rel="noopener">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025&ndash;2026 Helensburgh &amp; District Model Railway Club. All rights reserved.</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/Helensburghdmrc/?locale=en_GB" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@helensburghdistrictmodelra4736" target="_blank" rel="noopener" aria-label="YouTube">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.546 15.563V8.437L16.046 12l-6.5 3.563z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════ LAYOUT DETAIL OVERLAY ════════ -->
+<div class="overlay" id="layoutOverlay" onclick="if(event.target===this)closeDetail()">
+  <div class="overlay-panel">
+    <div class="overlay-banner carousel" id="carousel">
+      <button class="overlay-close" onclick="closeDetail()" aria-label="Close">&#x2715;</button>
+      <button class="carousel-nav carousel-prev" onclick="(event)=>carouselPrev(event)" aria-label="Previous">&#x2039;</button>
+      <button class="carousel-nav carousel-next" onclick="event=>carouselNext(event)" aria-label="Next">&#x203A;</button>
+      <div class="carousel-track" id="carouselTrack"></div>
+      <div class="carousel-dots" id="carouselDots"></div>
+    </div>
+    <div class="overlay-body">
+      <span class="layout-tag" id="overlayTag"></span>
+      <h2 id="overlayTitle"></h2>
+      <p id="overlayDesc"></p>
+      <p id="overlayExtra"></p>
+      <div class="overlay-meta">
+        <span class="overlay-meta-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg><span id="overlayGauge"></span></span>
+        <span class="overlay-meta-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9"/><path d="M6 11h12"/></svg><span id="overlayStatus"></span></span>
+        <span class="overlay-meta-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15c-2 2-3 3-4 3s-3-2-7-8S4 5 4 5"/><path d="M9 13l2 2"/></svg><span id="overlayExhibits"></span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ SCRIPTS ════════ -->
+<script>
+// Nav scroll shadow
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 10);
+});
+
+// Close mobile menu on link click
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open'));
+});
+
+// Scroll fade-up observer
+const io = new IntersectionObserver((entries) => {
+  for (const e of entries) if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+/* ── Gauge filtering ── */
+const filters = document.querySelectorAll('.filter-btn');
+const cards   = document.querySelectorAll('.layout-card');
+
+filters.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const gauge = btn.dataset.gauge;
+
+    // Update active state
+    filters.forEach(f => f.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Filter cards with animation
+    let visibleCount = 0;
+    cards.forEach(card => {
+      const gauges = (card.dataset.gauges || '').split(',').map(g => g.trim());
+      if (gauge === 'all' || gauges.includes(gauge)) {
+        card.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+
+    // Fade out/in cards
+    if (visibleCount > 0) {
+      document.querySelector('.layout-grid').style.opacity = '0';
+      setTimeout(() => { document.querySelector('.layout-grid').style.opacity = '1'; }, 50);
+    }
+  });
+});
+
+/* ── Carousel state ── */
+let carouselCurrent = 0;
+let carouselCount   = 0;
+let carouselSlugs  = [];
+let carouselDrag    = { active: false, start: 0, offset: 0 };
+
+function carouselNext(e) { e.stopPropagation(); if (carouselCurrent < carouselCount - 1) goSlide(carouselCurrent + 1); }
+function carouselPrev(e) { e.stopPropagation(); if (carouselCurrent > 0) goSlide(carouselCurrent - 1); }
+
+function goSlide(idx) {
+  carouselCurrent = idx;
+  const track = document.getElementById('carouselTrack');
+  track.style.transform = `translateX(-${idx * 100}%)`;
+  document.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+}
+
+function initCarousel() {
+  carouselCurrent = 0;
+  const track = document.getElementById('carouselTrack');
+  const dots  = document.getElementById('carouselDots');
+  track.innerHTML = '';
+  dots.innerHTML  = '';
+
+  // Build slides
+  for (let i = 0; i < carouselCount; i++) {
+    const slide = document.createElement('div');
+    slide.className = 'carousel-slide';
+    const img = document.createElement('img');
+    const pad = `${i + 1}`.padStart(2, '0');
+    img.src = `img/layouts/${carouselSlugs}/${pad}.jpg`;
+    img.loading = 'lazy'; img.decoding = 'async'; img.alt = '';
+    slide.appendChild(img);
+    track.appendChild(slide);
+
+    const dot = document.createElement('button');
+    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = (e) => { carouselNext(e); };
+    dots.appendChild(dot);
+  }
+
+  // Touch/drag events — remove old ones first to avoid duplicates
+  const c = document.getElementById('carousel');
+  ['touchstart','mousedown'].forEach(evt => {
+    const s = evt === 'touchstart' ? dragStart : mousedown;
+    const m = evt === 'touchstart' ? dragMove : mousemove;
+    const e2 = evt === 'touchstart' ? dragMoveEnd : mouseup;
+    if (c[evt + '_hdlr']) { c.removeEventListener(evt, c[evt + '_hdlr']); }
+    const fn = function(ev) { s.call(c, ev); window.addEventListener(m, mfn); window.addEventListener(e2, emf); };
+    c[evt + '_hdlr'] = fn;
+    c.addEventListener(evt, fn);
+  });
+
+  // cache references for other handlers
+  carousel._c = c; carousel._mfn = dragMove; carousel._emf = dragMoveEnd;
+}
+
+function mousedown(e) { dragStart(e); }
+function mousemove(e)   { dragMove(e); }
+function mouseup(e)     { dragMoveEnd(); window.removeEventListener('mousemove', carousel._mfn); window.removeEventListener('mouseup', carousel._emf); }
+
+function dragStart(e) {
+  const pt = e.touches ? e.touches[0] : e;
+  carouselDrag.active   = true;
+  carouselDrag.start    = pt.clientX;
+  carouselDrag.offset   = 0;
+  document.getElementById('carouselTrack').classList.add('dragging');
+}
+
+function dragMove(e) {
+  if (!carouselDrag.active) return;
+  const pt = e.touches ? e.touches[0] : e;
+  const c = carousel._c || document.getElementById('carousel');
+  carouselDrag.offset = pt.clientX - carouselDrag.start;
+  const w = c.offsetWidth || 1;
+  const track = document.getElementById('carouselTrack');
+  const pct = -(carouselCurrent * 100) + (carouselDrag.offset / w) * 100;
+  track.style.transform = `translateX(${pct}%)`;
+}
+
+function dragMoveEnd() {
+  if (!carouselDrag.active) return;
+  carouselDrag.active = false;
+  document.getElementById('carouselTrack').classList.remove('dragging');
+  const c = carousel._c || document.getElementById('carousel');
+  const w = c.offsetWidth || 1;
+  const threshold = w * 0.15;
+  if (carouselDrag.offset < -threshold && carouselCurrent < carouselCount - 1) goSlide(carouselCurrent + 1);
+  else if (carouselDrag.offset > threshold && carouselCurrent > 0) goSlide(carouselCurrent - 1);
+  else { document.getElementById('carouselTrack').style.transform = `translateX(-${carouselCurrent * 100}%)`; }
+  carouselDrag.offset = 0;
+}
+
+/* ── Layout detail overlay ── */
+const layoutsData = [
+  {
+    name: 'Millig Bay',
+    gauge: 'N Gauge',
+    gaugeClass: 'tag-n',
+    bannerClass: 'gauge-n',
+    desc: 'Our current show layout featuring a Scottish coastal setting with realistic scenery. A compact but feature-rich N gauge installation designed to shine at exhibitions.',
+    extra: 'This is our most recent layout, built with meticulous attention to detail in the N scale. The coastal theme draws inspiration from the beautiful Helensburgh waterfront.',
+    status: 'Active layout',
+    exhibits: 'Model Rail Scotland 2027'
+  },
+  {
+    name: 'Millig Creek',
+    gauge: 'N Gauge',
+    gaugeClass: 'tag-n',
+    bannerClass: 'gauge-n',
+    desc: 'Scenery-first layout exploring the relationship between natural landscapes and railway engineering. Focus on realistic terrain modelling.',
+    extra: 'A more scenery-focused project that emphasises earthworks, drainage, and vegetation — everything from cuttings to embankments is carefully crafted.',
+    status: 'Work in progress',
+    exhibits: 'TBA'
+  },
+  {
+    name: 'Trenches',
+    gauge: 'OO9 Narrow Gauge',
+    gaugeClass: 'tag-oo9',
+    bannerClass: 'gauge-oo9',
+    desc: 'A dramatic World War I supply lines layout capturing the atmosphere of trenches and narrow-gauge railways in no-man\'s land. Awarded the Tolworth Trainshow Cup in November 2018.',
+    extra: 'The attention to historical detail is exceptional — even every piece of track is based on documented WWI French Decauville systems. The diorama effect is striking.',
+    status: 'Award-winning layout',
+    exhibits: 'Occasional exhibitions'
+  },
+  {
+    name: 'Deadend Sidings',
+    gauge: 'OO Gauge',
+    gaugeClass: 'tag-oo',
+    bannerClass: 'gauge-oo',
+    desc: 'A classic shunting puzzle layout in OO gauge where the end of the line provides a challenge for the operator. Push the train, reverse it, and get it parked — all without running off.',
+    extra: 'This layout rewards careful planning and is a firm favourite with visitors who love operating railways. A great demonstration of prototype practice.',
+    status: 'Active layout',
+    exhibits: 'Regular exhibitions'
+  },
+  {
+    name: 'Millig Yard',
+    gauge: 'OO Gauge',
+    gaugeClass: 'tag-oo',
+    bannerClass: 'gauge-oo',
+    desc: 'A bustling locomotive yard where visitors can run their own trains. A hands-on operational layout showcasing the heart of any railway.',
+    extra: 'The operating potential is huge — multiple sidings, a depot with shunting duties, and through running make this a favourite for operators of all ages.',
+    status: 'Active layout',
+    exhibits: 'Regular exhibitions'
+  },
+  {
+    name: 'Asitwas',
+    gauge: 'OO 3-Rail',
+    gaugeClass: 'tag-3rail',
+    bannerClass: 'gauge-3rail',
+    desc: 'A nostalgic OO 3-rail layout capturing a bygone era of railway modelling. This project celebrates the golden age of electric multiple units.',
+    extra: 'Inspired by vintage magazine photographs and prototypes from the 1950s–60s, this layout features classic liveries and rolling stock that will delight modellers who grew up with model railways in those decades.',
+    status: 'Active layout',
+    exhibits: 'Occasional exhibitions'
+  },
+  {
+    name: 'Clydemuir',
+    gauge: 'OO Gauge',
+    gaugeClass: 'tag-oo',
+    bannerClass: 'gauge-oo',
+    desc: 'A realistic portrayal of the North Clyde electric railway system based around Dalmuir area. Debuted at Modelrail Scotland 2026.',
+    extra: 'The detail on this layout is remarkable — from signal locations to the correct stock formations. Every platform and route represents faithfully modelled Glasgow suburbia, right down to station signage.',
+    status: 'Newly debuted',
+    exhibits: 'Model Rail Scotland 2027 (planned)'
+  },
+  {
+    name: 'Lockdown Lane',
+    gauge: 'O Gauge',
+    gaugeClass: 'tag-o',
+    bannerClass: 'gauge-o',
+    desc: 'A larger scale layout with distinctive prototypical operation. The big scale gives exceptional detail and visual impact — each component of these models is visible enough to appreciate the craft.',
+    extra: 'O gauge (1:48 scale) offers one of the most rewarding modelling experiences as there\'s so much room for detail in every element — from track work inside locomotives all the way down to door handles on coaching stock.',
+    status: 'Active layout',
+    exhibits: 'Occasional exhibitions'
+  },
+  {
+    name: 'Canal Sidings',
+    gauge: 'O Gauge',
+    gaugeClass: 'tag-o',
+    bannerClass: 'gauge-o',
+    desc: 'O gauge industrial sidings inspired by Scotland\'s rich canal heritage. A fascinating look at the relationship between waterways and railways in freight transport.',
+    extra: 'The industrial theme includes warehousing, crane mechanisms, wagons of period-correct cargo, and realistic waterfront installations — all with operating potential.',
+    status: 'Active layout',
+    exhibits: 'Occasional exhibitions'
+  }
+];
+
+function openDetail(cardEl) {
+  const idx = Array.from(cards).indexOf(cardEl);
+  if (idx < 0 || !layoutsData[idx]) return;
+  const d = layoutsData[idx];
+
+  document.getElementById('overlayTitle').textContent = d.name;
+  document.getElementById('overlayDesc').textContent = d.desc;
+  document.getElementById('overlayExtra').textContent = d.extra || '';
+
+  const tag = document.getElementById('overlayTag');
+  tag.textContent = d.gauge;
+  tag.className = 'layout-tag ' + d.gaugeClass;
+
+  document.getElementById('overlayGauge').textContent  = d.gauge;
+  document.getElementById('overlayStatus').textContent  = d.status || '';
+  document.getElementById('overlayExhibits').textContent = d.exhibits || '';
+
+  // Build carousel: detect image count, then build slides
+  const folder = cardEl.querySelector('.layout-card-color img').getAttribute('src')
+    .replace(/^.*img\/layouts\//, '').split('/')[0];
+  carouselSlugs = folder;
+
+  // Probe image count: load cover first, then probe until we hit a missing file
+  const cover = new Image();
+  let ready = false;
+  cover.onload  = () => { ready = true; probe(folder, 2); };
+  cover.onerror = () => { /* no cover at all — just show overlay without slides */ showOverlay(); };
+  cover.src     = `img/layouts/${folder}/01.jpg`;
+
+  function waitForProbe() { return new Promise(resolve => { const check = () => ready ? resolve() : setTimeout(check, 16); check(); }); }
+
+  function probe(fld, attempt) {
+    const pad = `${attempt}`.padStart(2, '0');
+    const img = new Image();
+    img.onload  = () => { probe(fld, attempt + 1); };
+    img.onerror = () => { carouselCount = Math.max(1, attempt - 1); initCarousel(); showOverlay(); };
+    img.src     = `img/layouts/${fld}/${pad}`;
+  }
+
+  async function showOverlay() {
+    await Promise.race([waitForProbe(), new Promise(r => setTimeout(r, 2000))]);
+    if (carouselCount < 1) carouselCount = 1;
+    initCarousel();
+    document.getElementById('layoutOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeDetail() {
+  document.getElementById('layoutOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Close overlay on Escape key
+document.addEventListener('keydown', (e) => { 
+  if (e.key === 'Escape') closeDetail();
+  if (carouselCount > 1) {
+    if (e.key === 'ArrowRight') carouselNext(e);
+    if (e.key === 'ArrowLeft') carouselPrev(e);
+  }
+});
+</script>
+</body>
+</html>
